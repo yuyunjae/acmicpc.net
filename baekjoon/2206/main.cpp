@@ -47,7 +47,6 @@ int main(void)
             d_x = x + moveto[i][1];
             if (d_y > 0 && d_y <= N && d_x > 0 && d_x <= M)
             {
-                //cout << d_y << " " << d_x << " " << w_b << " " << "check\n" << endl;
                 if (d_y == N && d_x == M)
                 {
                     cout << visit[y][x][w_b] + 1;
@@ -58,26 +57,21 @@ int main(void)
                     if (!visit[d_y][d_x][0] && !mapp[d_y][d_x]) // 부숨x로 방문x && 벽이 아님.
                     {                    
                         visit[d_y][d_x][0] = visit[y][x][0] + 1;
-                        //visit[d_y][d_x][1] = visit[y][x][0] + 1;
                         path.emplace(d_y, d_x, false);
-                        //cout << visit[d_y][d_x][0] << ": " << d_y << " " << d_x << " " << "no\n";
                     }
                     if (!visit[d_y][d_x][1] && mapp[d_y][d_x]) // 부숨 0로 방문x && 벽임.
                     {
                         visit[d_y][d_x][1] = visit[y][x][0] + 1;
                         path.emplace(d_y, d_x, true);
-                        //cout << visit[d_y][d_x][1] << ": " << d_y << " " << d_x << " " << "break_wall\n";
                     }
                 }
                 else if (!visit[d_y][d_x][1] && !mapp[d_y][d_x])
                 {
                     visit[d_y][d_x][1] = visit[y][x][1] + 1;
-                    path.emplace(d_y, d_x, true);   
-                    //cout << visit[d_y][d_x][1] << ": " << d_y << " " << d_x << " " << "break_wall\n";
+                    path.emplace(d_y, d_x, true);
                 }
             }
         }
-        //cout << endl << get<0>(path.front()) << get<1>(path.front()) << get<2>(path.front()) << endl;
     }
     cout << "-1";
 }
