@@ -7,7 +7,6 @@
 
 using namespace std;
 
-bool visit[20001];
 int ans[20001];
 priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> >> vertex;
 vector<pair<int, int> > edge[20001]; // edge[vertex_from] = {weight, vertex_dest};
@@ -18,26 +17,14 @@ void    dijkstra()
 
     while (!vertex.empty())
     {
-        while (!vertex.empty())
-        {
-            tie(wei, ver) = vertex.top();
-            vertex.pop();
-            if (vertex.empty() && visit[ver])
-                return ;
-            else if (!visit[ver])
-            {
-                visit[ver] = true;
-                break ;
-            }
-        }
+        tie(wei, ver) = vertex.top();
+        vertex.pop();
         for (auto i : edge[ver])
         {
-            //cout << i.second;
             if (ans[i.second] > wei + i.first)
             {
                 ans[i.second] = wei + i.first;
                 vertex.emplace((wei + i.first), i.second);
-                //cout << vertex.top().first << ":" << vertex.top().second << endl;
             }
         }
     }
