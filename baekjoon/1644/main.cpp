@@ -10,7 +10,7 @@ void left_move(int *left)
         (*left)++;
 }
 
-int main(void)
+int main(void) // feedback: use additional vector make code read fast... 
 {
     int N, left = 2, sum = 0, ans = 0;
 
