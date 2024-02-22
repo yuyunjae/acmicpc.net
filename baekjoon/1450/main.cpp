@@ -2,38 +2,43 @@
 #include <vector>
 #include <algorithm>
 
+#define MAXI 1e9
+
 using namespace std;
 
 int obj[50];
+int N, C;
 
-int main(void) // 미완
+void    dfs(int start, int end, vector<long long>& vec, long long sum)
 {
-    int N, C, ans = 1, sum = 0, left = 0, right = 0, val;
+    if (sum > MAXI)
+        return ;
+    if (start >= end)
+    {
+        vec.push_back(sum);
+        return ;
+    }
+    dfs(start + 1, end, vec, sum); // 선택 x
+    dfs(start + 1, end, vec, sum + obj[start]); //선택 o
+}
 
+int main(void) // MITM (Meet In The Middle) algorithm -> 브루트포스 알고리즘시 2^30(2 ^ N)이므로 반을 나눠서 계산후(2 ^ (N // 2)), C - vec_f[i]보다 같거나 작은 vec_e의 원소의 수를 ans에 더하는 방식.
+{
+    int ans = 0, val;
+
+    vector<long long> vec_f;
+    vector<long long> vec_e;
     cin >> N >> C;
     for (int i = 0; i < N; i++)
         cin >> obj[i];
     sort(obj, obj + N);
-    while (right < N && left <= right)
+    dfs(0, N / 2, vec_f, 0);
+    dfs(N / 2, N, vec_e, 0);
+    sort(vec_e.begin(), vec_e.end());
+    for (int i = 0; i < vec_f.size(); i++)
     {
-        if (sum + obj[right] <= C)
-        {
-            sum += obj[right];
-            if (left == right) ans += 1;
-            else
-            {
-                val = 1;
-                for (int i = 0; i < right - left; i++)
-                    val *= 2;
-                ans += val;
-            }
-            right += 1;
-        }
-        else
-        {
-            sum -= obj[left];
-            left++;
-        }
+        val = C - vec_f[i];
+        ans += upper_bound(vec_e.begin(), vec_e.end(), val) - vec_e.begin();  // vec_e에서 val 보다 큰 숫자가 처음 나오는 인덱스 (iterator로 return - 초기 vec_f주소) 
     }
     cout << ans;
 }
