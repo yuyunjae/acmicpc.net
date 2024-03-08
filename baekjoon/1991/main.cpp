@@ -21,7 +21,7 @@ void    visit_clear()
     return ;
 }
 
-void    f_dfs()
+void    f_dfs() // preorder-traversal (전위 순회)
 {
     int val;
 
@@ -44,7 +44,7 @@ void    f_dfs()
     }
 }
 
-void    m_dfs()
+void    m_dfs() // inorder-traversal (중위 순회)
 {
     int val;
 
@@ -66,7 +66,7 @@ void    m_dfs()
     }
 }
 
-void    l_dfs()
+void    l_dfs() // postorder-traversal (후위 순회)
 {
     int val;
 
