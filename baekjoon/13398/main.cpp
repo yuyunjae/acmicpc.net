@@ -29,7 +29,6 @@ int main(void)
 	cout << *max_element(dp[0], dp[0] + 2 * n);
 }
 
-
 // #include <iostream>
 // #include <algorithm>
 
