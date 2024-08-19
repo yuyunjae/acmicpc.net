@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 
+
 using namespace std;
 
 vector<pair<int, int> > edge[1001];
