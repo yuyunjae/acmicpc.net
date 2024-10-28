@@ -1,4 +1,3 @@
-// 미완
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -6,6 +5,7 @@
 using namespace std;
 
 vector<int> vec;
+vector<int> arr;
 int answer;
 
 void find_arr(int value)
@@ -20,9 +20,8 @@ int main(void)
     int N, a;
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     cin >> N;
-    vector<int> arr;
 
     for (int i = 0; i < N; i++)
     {
@@ -30,14 +29,15 @@ int main(void)
         arr.push_back(a);
     }
     vec.push_back(arr[0]);
+    answer++;
     for (int i = 1; i < N; i++)
     {
-        if (arr[i] > vec[answer])
+        if (arr[i] > vec[answer - 1])
         {
             vec.push_back(arr[i]);
             answer++;
         }
-        // else find_arr(i);
+        else find_arr(arr[i]);
     }
     cout << answer;
 }
