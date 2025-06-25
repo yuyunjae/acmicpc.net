@@ -1,67 +1,69 @@
-#include <iostream> // 아직 못풀음 방법 생각해야할듯.
+// bfs로 해결. 이전 방향을 계속 기억하는 형태로 진행.
+// 만약 curr_state가 동일한 값을 만나면 cycle발생.
+#include <algorithm>
+#include <iostream>
+#include <queue>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-int N, M;
 string str[50];
+int visit[50][50];
+queue<vector<int>> qu;
+int curr_state = 0;
+int N, M;
 
-bool checkCycle(int xs, int ys, int xe, int ye, char ch)
-{
-    for (int i = ys + 1; i <= ye; i++)
-    {
-        if (str[xs][i] != ch)
-            return false;
+bool bfs() {
+  int dx[4] = {0, 1, 0, -1};
+  int dy[4] = {-1, 0, 1, 0};
+  while (!qu.empty()) {
+    vector<int> a = qu.front();
+    qu.pop();
+    int x, y;
+    for (int i = 0; i < 4; i++) {
+      if (i == a[2]) continue;
+      x = a[1] + dx[i];
+      y = a[0] + dy[i];
+      if (x > -1 && y > -1 && x < M && y < N && str[a[0]][a[1]] == str[y][x]) {
+        if (visit[y][x] == curr_state) {
+          cout << "Yes";
+          return true;
+        }
+        visit[y][x] = curr_state;
+        qu.push({y, x, (i + 2) % 4});
+      }
     }
-    for (int i = xe + 1; i <= xs; i++)
-    {
-        if (str[i][ye] != ch)
-            return false;
-    }
-    return true;
+  }
+  return false;
 }
 
-int main(void)
-{
-    int tempx, tempy;
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
+int main(void) {
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
+  cin >> N >> M;
 
-    cin >> N >> M;
+  for (int i = 0; i < N; i++) cin >> str[i];
+  //   for (int i = 0; i < N; i++) cout << str[i] << endl;
 
-    for (int i = 0 ; i < N; i++){
-        cin >> str[i];
+  // visit 초기화.
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < M; j++) {
+      visit[i][j] = 20000;
     }
-    for (int i = 0; i < N -1; i++)
-    {
-        for (int j = 0; j < M -1; j++)
-        {
-            tempx = i + 1;
-            tempy = j + 1; 
-            while (tempx < N && str[tempx][j] == str[i][j])
-                tempx++;
-            tempx--;
-            if (tempx == i)
-                break ;
-            while (tempy < M && str[i][tempy] == str[i][j])
-                tempy++;
-            tempy--;
-            if (tempy == j)
-                break ;
-            int k = min(tempx - i, tempy - j);
-            for (int ind = 1; ind <= k; ind++)
-            {
-                if (str[i][j] == str[i+ind][j+ind])
-                {
-                    // if (checkCycle(i + ind, j, i, j + ind, str[i][j]))
-                    // {
-                    //     cout << "(" << i + ind << "," << j << ") : (" << i << "," << j + ind << ")\n";
-                    //     cout << "YES";
-                    //     return 0;
-                    // }
-                }
-            }
-        }
+  }
+
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < M; j++) {
+      if (visit[i][j] > curr_state) {
+        qu.push({i, j, 0});
+        visit[i][j] = curr_state;
+        if (bfs()) return 0;
+      }
+      curr_state++;
     }
-    cout << "NO";
+  }
+
+  cout << "No";
+  return 0;
 }
