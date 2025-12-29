@@ -1,3 +1,4 @@
+# sol 1003 fibonacci easy
 from sys import stdin
 
 def main():
