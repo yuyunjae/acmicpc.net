@@ -1,4 +1,5 @@
 -- https://school.programmers.co.kr/learn/courses/30/lessons/59043
+-- 조건 잘 읽기
 -- 코드를 입력하세요
 SELECT AI.animal_id as ANIMAL_ID, AI.NAME as NAME
 from ANIMAL_INS AI join ANIMAL_OUTS AO
